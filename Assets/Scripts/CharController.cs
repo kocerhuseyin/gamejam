@@ -32,7 +32,11 @@ public class CharController : MonoBehaviour
             Rigidbody.AddForce(Vector3.up * JumpFactor);
         }
 
-        //Rigidbody.velocity = Direction * MovementSpeed * Time.deltaTime;
+        Vector3 Vel = Rigidbody.velocity;
 
+        Vel.x = Direction.x * MovementSpeed * Time.deltaTime;
+
+        Rigidbody.velocity = Vel;
+        Debug.Log(Vel);
     }
 }
