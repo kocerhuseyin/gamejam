@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class CharController : MonoBehaviour
@@ -8,7 +9,8 @@ public class CharController : MonoBehaviour
     public float MovementSpeed;
     public float Gravity;
     public float JumpFactor;
-
+    float CurrentSpeed;
+    
     Vector3 Direction;
 
     void Start()
@@ -19,24 +21,19 @@ public class CharController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Direction = Vector3.left;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            Direction = Vector3.right;
-        }
+        float Horizontal = Input.GetAxis("Horizontal");
+        CurrentSpeed = Horizontal * MovementSpeed;
+ 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Rigidbody.AddForce(Vector3.up * JumpFactor);
+            Rigidbody.AddForce(Vector3.up * JumpFactor, ForceMode.Impulse);
         }
 
         Vector3 Vel = Rigidbody.velocity;
-
-        Vel.x = Direction.x * MovementSpeed;
-
+        Vel.x = CurrentSpeed;
         Rigidbody.velocity = Vel;
-        Debug.Log(Vel);
+
+        //Rigidbody.AddForce(Vector3.right * CurrentSpeed, ForceMode.Acceleration);
+        Rigidbody.AddForce(Gravity * Vector3.down, ForceMode.Force);
     }
 }
