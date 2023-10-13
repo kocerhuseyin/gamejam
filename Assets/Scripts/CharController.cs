@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class CharController : MonoBehaviour
 {
-    public Rigidbody Rigidbody;
+    Rigidbody Rigidbody;
     public float MovementSpeed;
     public float Gravity;
+    public float JumpFactor;
+
     Vector3 Direction;
 
     void Start()
     {
-
+        Rigidbody = GetComponent<Rigidbody>();  
     }
 
     // Update is called once per frame
@@ -25,7 +27,12 @@ public class CharController : MonoBehaviour
         {
             Direction = Vector3.right;
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Rigidbody.AddForce(Vector3.up * JumpFactor);
+        }
 
-        Rigidbody.velocity = Direction * MovementSpeed * Time.deltaTime;
+        //Rigidbody.velocity = Direction * MovementSpeed * Time.deltaTime;
+
     }
 }
