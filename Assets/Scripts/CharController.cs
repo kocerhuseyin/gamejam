@@ -34,7 +34,7 @@ public class CharController : MonoBehaviour
 
         Vector3 Vel = Rigidbody.velocity;
 
-        Vel.x = Direction.x * MovementSpeed * Time.deltaTime;
+        Vel.x = Direction.x * MovementSpeed;
 
         Rigidbody.velocity = Vel;
         Debug.Log(Vel);
