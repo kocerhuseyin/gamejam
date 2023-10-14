@@ -12,6 +12,7 @@ public enum PlayerShapeState
 public class PlayerStateManager : MonoBehaviour
 {
     public GameObject TransformParticle;
+  
     public PlayerShapeState currentState { get; set;  } = PlayerShapeState.Circle;
     public GameObject CurrentMeshObject { get; private set; }
     public Animator ObjectAnimator { get; private set; }
@@ -79,7 +80,8 @@ public class PlayerStateManager : MonoBehaviour
                 break;
         }
 
-        Instantiate(TransformParticle, this.transform);
+        GameObject particle = Instantiate(TransformParticle, this.transform);
+        Destroy(particle,1f);
         ObjectAnimator = CurrentMeshObject.GetComponentInChildren<Animator>();
         ObjectMesh = CurrentMeshObject.GetComponentInChildren<MeshFilter>().sharedMesh;
         CurrentMeshObject.transform.localPosition = Vector3.zero;
@@ -90,6 +92,7 @@ public class PlayerStateManager : MonoBehaviour
     {
         MeshFilter = GetComponent<MeshFilter>();
         CharController = GetComponent<CharController>();
+        ChangeState( PlayerShapeState.Circle);
     }
 
     private void Update()

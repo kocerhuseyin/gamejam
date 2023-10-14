@@ -12,6 +12,7 @@ public class CharController : MonoBehaviour
     PlayerStateManager PlayerStateManager;
 
     public float MovementSpeed;
+    public float MovementSpeedBoat;
     public float jumpForce = 5.0f;
     public float groundCheckDistance;
     public float jumpBufferLength = 0.2f; // Time window for the buffer in seconds. Can be adjusted.
@@ -87,13 +88,18 @@ public class CharController : MonoBehaviour
                     Yaw = Mathf.LerpAngle(Yaw, Direction > 0 ? 180 : 0, Time.deltaTime * 5.0f);
                     PlayerStateManager.CurrentMeshObject.transform.localRotation = Quaternion.Euler(new Vector3(0, Yaw, 0));
                     float DirectionLerp = Mathf.InverseLerp(0, 180, Yaw) * 2 - 1;
-                    Rigidbody.velocity = new Vector3(!isGrounded ? DirectionLerp * MovementSpeed : 0, Rigidbody.velocity.y, Rigidbody.velocity.z); 
-
+                    Rigidbody.velocity = new Vector3(!isGrounded ? DirectionLerp * MovementSpeed : 0, Rigidbody.velocity.y, Rigidbody.velocity.z);
                 }
 
                 break;
             case PlayerShapeState.Boat:
-
+                Vector3 movementBoat = new Vector3(Horizontal, 0.0f, 0.0f) * MovementSpeedBoat; 
+                Rigidbody.velocity = new Vector3(movementBoat.x, Rigidbody.velocity.y, movementBoat.z); 
+                transform.rotation = Quaternion.identity;
+                Rigidbody.freezeRotation = true; 
+                Rigidbody.drag = 0; 
+                SphereCollider.enabled = false; 
+                MeshCollider.enabled = true; 
                 break;
             default:
                 break;
@@ -127,6 +133,24 @@ public class CharController : MonoBehaviour
             case PlayerShapeState.Plane:
                 break;
             case PlayerShapeState.Boat:
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    JumpTimer += jumpBufferLength;  // buffer amount
+                }
+
+                if (JumpTimer > 0)
+                {
+                    JumpTimer -= Time.deltaTime;
+
+                    if (isGrounded)
+                    {
+                        var Vel = Rigidbody.velocity;
+                        Vel.y = 0;
+                        Rigidbody.velocity = Vel;
+                        Rigidbody.AddForce(Vector3.up * jumpForce / 5.0f, ForceMode.Impulse);
+                        JumpTimer = 0;
+                    }
+                }
                 break;
             default:
                 break;
