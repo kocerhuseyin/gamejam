@@ -1,44 +1,12 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5479646437785595897
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6528348803233131000}
-  m_Layer: 0
-  m_Name: Ucak
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6528348803233131000
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5479646437785595897}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3792847, y: 3.5817106, z: -4.38338}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1302484452602596716}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1556525594574170759
+--- !u!1001 &1747552551500505525
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 6528348803233131000}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 24be43396da191642aed1f69ea4757db,
         type: 3}
@@ -48,17 +16,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 24be43396da191642aed1f69ea4757db,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 20.474386
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 24be43396da191642aed1f69ea4757db,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.000000059604645
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 24be43396da191642aed1f69ea4757db,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.6786617
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 24be43396da191642aed1f69ea4757db,
         type: 3}
@@ -98,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 24be43396da191642aed1f69ea4757db,
         type: 3}
       propertyPath: m_Name
-      value: Mesh
+      value: Ucak
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -107,31 +75,25 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24be43396da191642aed1f69ea4757db,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3603933538026374466}
+      addedObject: {fileID: 6420148060019448861}
   m_SourcePrefab: {fileID: 100100000, guid: 24be43396da191642aed1f69ea4757db, type: 3}
---- !u!4 &1302484452602596716 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 24be43396da191642aed1f69ea4757db,
-    type: 3}
-  m_PrefabInstance: {fileID: 1556525594574170759}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1826361492776720342 stripped
+--- !u!1 &1477712946742090980 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 24be43396da191642aed1f69ea4757db,
     type: 3}
-  m_PrefabInstance: {fileID: 1556525594574170759}
+  m_PrefabInstance: {fileID: 1747552551500505525}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &3603933538026374466
+--- !u!95 &6420148060019448861
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1826361492776720342}
+  m_GameObject: {fileID: 1477712946742090980}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8fba23139c619f344b6d31e55a5f7501, type: 2}
+  m_Controller: {fileID: 9100000, guid: b82bff78b0bb21b49bb25c900dbd2977, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

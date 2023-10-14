@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5891591897391311823}
   - component: {fileID: 2597511233485013655}
+  - component: {fileID: 8503308301388008198}
   - component: {fileID: 4266472944882299025}
   - component: {fileID: 5194400358833291404}
   - component: {fileID: 3962546351386273254}
@@ -56,6 +57,28 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.35
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!64 &8503308301388008198
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4872367654818785450}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!54 &4266472944882299025
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -116,4 +139,4 @@ MonoBehaviour:
   boatWetMultiplier: 0.5
   Circle: {fileID: 919132149155446097, guid: 2236ea5607940584c9e218ff9866642a, type: 3}
   Boat: {fileID: 919132149155446097, guid: 643a6764d8895964da055fbcdd04463f, type: 3}
-  Plane: {fileID: 1477712946742090980, guid: 732afe14fd0629f4db8e495fe30571e8, type: 3}
+  Plane: {fileID: 5479646437785595897, guid: fc3ab7645b719384bb05b031b1c74275, type: 3}

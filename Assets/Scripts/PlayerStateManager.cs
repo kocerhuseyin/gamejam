@@ -15,6 +15,8 @@ public class PlayerStateManager : MonoBehaviour
     public GameObject CurrentMeshObject { get; private set; }
     public Animator ObjectAnimator { get; private set; }
 
+    public Mesh ObjectMesh{ get; private set; }
+
     // These values can be tweaked in the Unity Editor to get the desired effect.
     public float circleWetMultiplier = 1.0f;
     public float planeWetMultiplier = 1.5f;
@@ -75,7 +77,8 @@ public class PlayerStateManager : MonoBehaviour
             default:
                 break;
         }
-        ObjectAnimator = CurrentMeshObject.GetComponent<Animator>();
+        ObjectAnimator = CurrentMeshObject.GetComponentInChildren<Animator>();
+        ObjectMesh = CurrentMeshObject.GetComponentInChildren<MeshFilter>().sharedMesh;
         CurrentMeshObject.transform.localPosition = Vector3.zero;
         // ADD STATE CHANGE ANIMATION HERE <------
     }

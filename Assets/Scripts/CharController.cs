@@ -7,6 +7,7 @@ public class CharController : MonoBehaviour
 {
     private Rigidbody Rigidbody;
     private SphereCollider SphereCollider;
+    private MeshCollider MeshCollider;
     Animator Animator;
     PlayerStateManager PlayerStateManager;
 
@@ -41,6 +42,7 @@ public class CharController : MonoBehaviour
     {
         Rigidbody = GetComponent<Rigidbody>();
         SphereCollider = GetComponent<SphereCollider>();
+        MeshCollider =  GetComponent<MeshCollider>();
         PlayerStateManager = GetComponent<PlayerStateManager>();
         Animator = GetComponent<Animator>();   
         //rb.mass = playerData.mass;
@@ -68,19 +70,25 @@ public class CharController : MonoBehaviour
                 Rigidbody.velocity = new Vector3(movement.x, Rigidbody.velocity.y, movement.z);
                 Rigidbody.freezeRotation = false;
                 Rigidbody.drag = 0;
+                SphereCollider.enabled = true;
+                MeshCollider.enabled = false;
                 break;
             case PlayerShapeState.Plane:
                 transform.rotation = Quaternion.identity;
                 Rigidbody.freezeRotation = true;
                 Rigidbody.drag = 10;
- 
+                SphereCollider.enabled = false;
+                MeshCollider.enabled = true;
+                MeshCollider.sharedMesh = PlayerStateManager.ObjectMesh;
+
                 if (Direction != 0)
                 {
                     var Yaw = PlayerStateManager.CurrentMeshObject.transform.localRotation.eulerAngles.y;
                     Yaw = Mathf.LerpAngle(Yaw, Direction > 0 ? 180 : 0, Time.deltaTime * 5.0f);
                     PlayerStateManager.CurrentMeshObject.transform.localRotation = Quaternion.Euler(new Vector3(0, Yaw, 0));
                     float DirectionLerp = Mathf.InverseLerp(0, 180, Yaw) * 2 - 1;
-                    Rigidbody.velocity = new Vector3(DirectionLerp * MovementSpeed, Rigidbody.velocity.y, Rigidbody.velocity.z); 
+                    Rigidbody.velocity = new Vector3(!isGrounded ? DirectionLerp * MovementSpeed : 0, Rigidbody.velocity.y, Rigidbody.velocity.z); 
+
                 }
 
                 break;
