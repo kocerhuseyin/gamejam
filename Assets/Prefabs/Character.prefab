@@ -123,6 +123,7 @@ MonoBehaviour:
   MovementSpeed: 4
   MovementSpeedBoat: 2
   jumpForce: 8
+  jumpForceBoat: 3
   groundCheckDistance: 0.05
   jumpBufferLength: 0.2
 --- !u!114 &3962546351386273254
@@ -141,6 +142,6 @@ MonoBehaviour:
   circleWetMultiplier: 1
   planeWetMultiplier: 1.5
   boatWetMultiplier: 0.5
-  Circle: {fileID: 919132149155446097, guid: 2236ea5607940584c9e218ff9866642a, type: 3}
+  Circle: {fileID: 3348972472831342265, guid: 01da7a9257d6be04981cffa856566788, type: 3}
   Boat: {fileID: 1287756899382240524, guid: 671e5674a92c78b42ae7fc01ba859e8f, type: 3}
   Plane: {fileID: 5479646437785595897, guid: fc3ab7645b719384bb05b031b1c74275, type: 3}

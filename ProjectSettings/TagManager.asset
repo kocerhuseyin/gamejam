@@ -8,6 +8,13 @@ TagManager:
   - Missile
   - Water
   - Scissors
+  - Fan
+  - quit
+  - levels
+  - level1
+  - start
+  - desk
+  - Shredder
   layers:
   - Default
   - TransparentFX
@@ -16,7 +23,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - IgnoreSun
   - 
   - 
   - 

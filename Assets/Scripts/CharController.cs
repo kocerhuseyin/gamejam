@@ -40,11 +40,10 @@ public class CharController : MonoBehaviour
         PlayerLayer = LayerMask.NameToLayer("Player");
     }
 
-    
     void OnLand()
     {
-        return;
         Debug.Log(GroundHit.transform.gameObject.tag);
+        return;
         if (GroundHit.transform.gameObject.tag == "Water")
         {
             if (PlayerStateManager.currentState == PlayerShapeState.Boat)
@@ -74,6 +73,33 @@ public class CharController : MonoBehaviour
             var go = Instantiate(SplashParticle, transform.position, transform.rotation);
             Destroy(go, 1.0f);
         }
+        if (collision.transform.tag == "Scissors")
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "Scissors")
+        {
+            Destroy(gameObject);
+        }
+        if (other.transform.tag == "Shredder")
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.transform.tag == "Fan")
+        {         
+            var Fan = other.transform.parent.GetComponent<FanSpin>();
+            var Distance = Vector3.Distance(other.transform.parent.position, transform.position);
+            
+            Rigidbody.AddForce((1-Mathf.InverseLerp(0, Fan.Area.height, Distance)) * other.transform.up * Fan.Power, ForceMode.Force);           
+        }
     }
 
     private void Update()
@@ -84,8 +110,7 @@ public class CharController : MonoBehaviour
         Vector3 rayDirection = Vector3.down;
 
         if (Physics.Raycast(rayStart, rayDirection, out GroundHit, float.MaxValue, ~PlayerLayer))
-        {
-     
+        { 
             if (GroundHit.distance - SphereCollider.radius < groundCheckDistance)
             {
                 if (GroundHit.transform.gameObject.tag == "Water")
@@ -147,7 +172,15 @@ public class CharController : MonoBehaviour
 
                 break;
             case PlayerShapeState.Boat:
-                Vector3 movementBoat = new Vector3(Horizontal, 0.0f, 0.0f) * MovementSpeedBoat; 
+                Vector3 movementBoat;
+
+                if (GroundHit.transform.tag == "Water")
+                {
+                    movementBoat = new Vector3(Horizontal, 0.0f, 0.0f) * MovementSpeedBoat;
+                }
+                else
+                    movementBoat = Vector3.zero;
+
                 Rigidbody.velocity = new Vector3(movementBoat.x, Rigidbody.velocity.y, movementBoat.z); 
                 transform.rotation = Quaternion.identity;
                 Rigidbody.freezeRotation = true; 
