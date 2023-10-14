@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Missile
   - Water
+  - Scissors
   layers:
   - Default
   - TransparentFX

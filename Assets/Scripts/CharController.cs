@@ -11,9 +11,13 @@ public class CharController : MonoBehaviour
     Animator Animator;
     PlayerStateManager PlayerStateManager;
 
+    public GameObject LandParticle;
+    public GameObject SplashParticle;
+
     public float MovementSpeed;
     public float MovementSpeedBoat;
     public float jumpForce = 5.0f;
+    public float jumpForceBoat = 3.0f;
     public float groundCheckDistance;
     public float jumpBufferLength = 0.2f; // Time window for the buffer in seconds. Can be adjusted.
     private int PlayerLayer;
@@ -21,23 +25,9 @@ public class CharController : MonoBehaviour
     int Direction = 1;
 
     float JumpTimer;
-    bool isGrounded
-    {
-        get
-        {
-            RaycastHit hit;
-            Vector3 rayStart = transform.position; // Adjust the offset to avoid self-collision
-
-            Vector3 rayDirection = Vector3.down;
-
-            if (Physics.Raycast(rayStart, rayDirection, out hit, float.MaxValue, ~PlayerLayer))
-            {
-                if (hit.distance - SphereCollider.radius < groundCheckDistance)
-                    return true;
-            }
-            return false;
-        }
-    }
+    bool isGrounded;
+    bool preIsGrounded;
+    RaycastHit GroundHit;
 
     private void Start()
     {
@@ -50,10 +40,74 @@ public class CharController : MonoBehaviour
         PlayerLayer = LayerMask.NameToLayer("Player");
     }
 
+    
+    void OnLand()
+    {
+        return;
+        Debug.Log(GroundHit.transform.gameObject.tag);
+        if (GroundHit.transform.gameObject.tag == "Water")
+        {
+            if (PlayerStateManager.currentState == PlayerShapeState.Boat)
+            {
+                var GO = Instantiate(SplashParticle);
+                GO.transform.position = transform.position;
+                GO.transform.localScale *= 0.4f;
+                GO.transform.Translate(0, -SphereCollider.radius, 0);
+                Destroy(GO, 1.0f);
+            }
+        }
+        else
+        {
+     
+            var GO = Instantiate(LandParticle);
+            GO.transform.position = transform.position;
+            GO.transform.localScale *= 0.4f;
+            GO.transform.Translate(0, -SphereCollider.radius, 0);
+            Destroy(GO, 1.0f);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag =="Water")
+        {
+            var go = Instantiate(SplashParticle, transform.position, transform.rotation);
+            Destroy(go, 1.0f);
+        }
+    }
+
     private void Update()
     {
+        //Grounded
+        Vector3 rayStart = transform.position; // Adjust the offset to avoid self-collision
+
+        Vector3 rayDirection = Vector3.down;
+
+        if (Physics.Raycast(rayStart, rayDirection, out GroundHit, float.MaxValue, ~PlayerLayer))
+        {
+     
+            if (GroundHit.distance - SphereCollider.radius < groundCheckDistance)
+            {
+                if (GroundHit.transform.gameObject.tag == "Water")
+                {
+                    if (PlayerStateManager.currentState != PlayerShapeState.Boat)
+                        Destroy(gameObject);
+                }
+                  isGrounded = true;
+            }
+            else
+                isGrounded = false;
+        }
+         else isGrounded = false;
+
+        if (isGrounded && ! preIsGrounded)
+        {
+            OnLand();
+        }
+
+        preIsGrounded = isGrounded;
         Move();
-        Jump();
+        Jump();     
     }
 
     private void Move()
@@ -98,8 +152,10 @@ public class CharController : MonoBehaviour
                 transform.rotation = Quaternion.identity;
                 Rigidbody.freezeRotation = true; 
                 Rigidbody.drag = 0; 
-                SphereCollider.enabled = false; 
-                MeshCollider.enabled = true; 
+                SphereCollider.enabled = true; 
+                MeshCollider.enabled = false;
+
+                PlayerStateManager.CurrentMeshObject.transform.localPosition = new Vector3(0, -SphereCollider.radius, 0);
                 break;
             default:
                 break;
@@ -147,7 +203,7 @@ public class CharController : MonoBehaviour
                         var Vel = Rigidbody.velocity;
                         Vel.y = 0;
                         Rigidbody.velocity = Vel;
-                        Rigidbody.AddForce(Vector3.up * jumpForce / 5.0f, ForceMode.Impulse);
+                        Rigidbody.AddForce(Vector3.up * jumpForceBoat, ForceMode.Impulse);
                         JumpTimer = 0;
                     }
                 }
