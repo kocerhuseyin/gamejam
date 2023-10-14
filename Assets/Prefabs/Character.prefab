@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f8a7e9098d70d48b7dca85784d70d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TransformParticle: {fileID: 153256, guid: fe394d041df1a0547990f49cf653249f, type: 3}
   circleWetMultiplier: 1
   planeWetMultiplier: 1.5
   boatWetMultiplier: 0.5
