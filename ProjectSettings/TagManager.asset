@@ -15,6 +15,9 @@ TagManager:
   - start
   - desk
   - Shredder
+  - Wire
+  - level3
+  - level2
   layers:
   - Default
   - TransparentFX

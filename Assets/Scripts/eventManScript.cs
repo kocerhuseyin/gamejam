@@ -11,11 +11,26 @@ public class eventManScript : MonoBehaviour
 
     public GameObject cameraObject;
     private GameObject startButton;
+
+    public bool isGameLost;
+
+    public GameObject losePanel;
+    public GameObject pausePanel;
+
     private void Start()
     {
+        Time.timeScale = 1f;
+        isGameLost = false;
+
+        if (losePanel != null)
+        {
+            losePanel.SetActive(false);
+
+        }
+
         cameraObject = GameObject.Find("Main Camera");
-       startButton = GameObject.Find("startButton");
-        if(startButton!=null)
+        startButton = GameObject.Find("startButton");
+        if (startButton != null)
         {
             startButton.SetActive(true);
         }
@@ -23,6 +38,18 @@ public class eventManScript : MonoBehaviour
     }
     void Update()
     {
+        if (isGameLost)
+        {
+            //Time.timeScale = 0f;
+            //losePanel.SetActive(true);
+            //isGameLost = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pausePanel.SetActive(true);
+            Time.timeScale = 0f;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -37,7 +64,7 @@ public class eventManScript : MonoBehaviour
                 }
                 else if (hit.collider.gameObject.CompareTag("levels"))
                 {
-                   MoveAndRotateCameraPano();
+                    MoveAndRotateCameraPano();
                 }
                 else if (hit.collider.gameObject.CompareTag("desk"))
                 {
@@ -45,16 +72,38 @@ public class eventManScript : MonoBehaviour
                 }
                 else if (hit.collider.gameObject.CompareTag("level1"))
                 {
+                    Debug.Log("load level 1");
                     loadLevel1();
+                }
+                else if (hit.collider.gameObject.CompareTag("level2"))
+                {
+                    Debug.Log("load level 1");
+                    loadLevel2();
+                }
+                else if (hit.collider.gameObject.CompareTag("level3"))
+                {
+                    loadLevel3();
                 }
             }
         }
+    }
+    public void continueGame()
+    {
+        Time.timeScale = 1f;
+        pausePanel.SetActive(false);
     }
 
     public void loadLevel1()
     {
         SceneManager.LoadScene("Level 1");
-        SceneManager.LoadScene("Level 1");
+    }
+    public void loadLevel2()
+    {
+        SceneManager.LoadScene("Level 2");
+    }
+    public void loadLevel3()
+    {
+        SceneManager.LoadScene("Level 3");
     }
     public void exitGame()
     {
@@ -67,7 +116,7 @@ public class eventManScript : MonoBehaviour
 
     public void MoveAndRotateCameraDesk()
     {
-        if(startButton!=null)
+        if (startButton != null)
         {
             startButton.SetActive(false);
         }

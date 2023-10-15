@@ -14,6 +14,7 @@ public class CharController : MonoBehaviour
     public GameObject LandParticle;
     public GameObject SplashParticle;
 
+    public eventManScript eventManager;
     public float MovementSpeed;
     public float MovementSpeedBoat;
     public float jumpForce = 5.0f;
@@ -31,6 +32,10 @@ public class CharController : MonoBehaviour
 
     private void Start()
     {
+        //
+        eventManager = GameObject.Find("eventMan").GetComponent<eventManScript>();
+        //
+
         Rigidbody = GetComponent<Rigidbody>();
         SphereCollider = GetComponent<SphereCollider>();
         MeshCollider =  GetComponent<MeshCollider>();
@@ -42,26 +47,21 @@ public class CharController : MonoBehaviour
 
     void OnLand()
     {
-        Debug.Log(GroundHit.transform.gameObject.tag);
-        return;
+ 
         if (GroundHit.transform.gameObject.tag == "Water")
         {
             if (PlayerStateManager.currentState == PlayerShapeState.Boat)
             {
-                var GO = Instantiate(SplashParticle);
-                GO.transform.position = transform.position;
-                GO.transform.localScale *= 0.4f;
-                GO.transform.Translate(0, -SphereCollider.radius, 0);
+                var GO = Instantiate(SplashParticle, transform.position, transform.rotation);
+                GO.transform.Translate(0, -SphereCollider.radius*0.8f, 0);
+                GO.transform.localScale *= 0.7f;
                 Destroy(GO, 1.0f);
             }
         }
         else
         {
      
-            var GO = Instantiate(LandParticle);
-            GO.transform.position = transform.position;
-            GO.transform.localScale *= 0.4f;
-            GO.transform.Translate(0, -SphereCollider.radius, 0);
+            var GO = Instantiate(LandParticle, transform.position, transform.rotation);
             Destroy(GO, 1.0f);
         }
     }
@@ -70,11 +70,12 @@ public class CharController : MonoBehaviour
     {
         if (collision.transform.tag =="Water")
         {
-            var go = Instantiate(SplashParticle, transform.position, transform.rotation);
-            Destroy(go, 1.0f);
+            //var go = Instantiate(SplashParticle, transform.position, transform.rotation);
+            //Destroy(go, 1.0f);
         }
         if (collision.transform.tag == "Scissors")
         {
+            gameLost();
             Destroy(gameObject);
         }
     }
@@ -83,10 +84,17 @@ public class CharController : MonoBehaviour
     {
         if (other.transform.tag == "Scissors")
         {
+            gameLost();
             Destroy(gameObject);
         }
         if (other.transform.tag == "Shredder")
         {
+            gameLost();
+            Destroy(gameObject);
+        }
+        if (other.transform.tag == "Wire")
+        {
+            gameLost();
             Destroy(gameObject);
         }
     }
@@ -116,7 +124,10 @@ public class CharController : MonoBehaviour
                 if (GroundHit.transform.gameObject.tag == "Water")
                 {
                     if (PlayerStateManager.currentState != PlayerShapeState.Boat)
+                    {
+                        gameLost();
                         Destroy(gameObject);
+                    }
                 }
                   isGrounded = true;
             }
@@ -133,6 +144,11 @@ public class CharController : MonoBehaviour
         preIsGrounded = isGrounded;
         Move();
         Jump();     
+    }
+
+    public void gameLost()
+    {
+        eventManager.isGameLost = true;
     }
 
     private void Move()
